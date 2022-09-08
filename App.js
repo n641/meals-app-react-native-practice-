@@ -1,18 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-import MealsNavegator from './Navigation/MealsNavegator'
+import MyDrawer from './Navigation/MealsNavegator'
 
-export default function App() {
+import { Freeze } from "react-freeze";
+
+export default function App({ shouldSuspendRendering }) {
   return (
-      <MealsNavegator/>
+    // to imporove performance (https://github.com/software-mansion/react-freeze#readme)
+     <Freeze freeze={shouldSuspendRendering} style={styles.container}>
+      <MyDrawer/>
+      </Freeze> 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
