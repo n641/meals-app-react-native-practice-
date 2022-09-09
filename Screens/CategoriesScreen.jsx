@@ -35,7 +35,7 @@ const CategoriesScreen = ({navigation}) => {
   }
 
   return (
-    
+    <View style={{bottom:50}}>
     <FlatList
       numColumns={2}
       keyExtractor={(item, index) => item.id}
@@ -43,6 +43,7 @@ const CategoriesScreen = ({navigation}) => {
       renderItem={renderGredItem}
 
     />
+    </View>
   )
 
 }

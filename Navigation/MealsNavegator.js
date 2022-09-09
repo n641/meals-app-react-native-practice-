@@ -113,9 +113,9 @@ function MyTabs() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#e91e63',
-        tabBarStyle: { borderRadius: 100, backgroundColor: colors.primaryColor, margin: 10, justifyContent: 'center', position: 'absolute' },
+        tabBarStyle: { borderRadius: 100, backgroundColor: colors.primaryColor, margin: 10, justifyContent: 'center', position: 'absolute' , overflow:'hidden',elevation:2 },
         tabBarBackground: () => (
-          <BlurView tint="dark" intensity={2} style={StyleSheet.absoluteFill} />
+          <BlurView tint="light" intensity={1} style={StyleSheet.absoluteFill} />
         ),
       }}
     >

@@ -7,6 +7,9 @@ import {Ionicons} from"@expo/vector-icons";
 
 import Colors from '../constants/colors';
 
+import { useDispatch } from 'react-redux';
+import { setFilters } from '../Store/actions/meals';
+
 const FilterSwitch = props => {
   return (
     <View style={styles.filterContainer}>
@@ -29,6 +32,8 @@ const FiltersScreen = ({navigation}) => {
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
 
+  const dispatch = useDispatch();
+
   const saveFilters = useCallback(() => {
     const appliedFilters = {
       glutenFree: isGlutenFree,
@@ -38,10 +43,12 @@ const FiltersScreen = ({navigation}) => {
     };
 
     console.log(appliedFilters);
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+
+    dispatch(setFilters(appliedFilters));
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
   useEffect(() => {
-    navigation.setParams({ save: saveFilters });
+    // navigation.setParams({save: saveFilters });
   }, [saveFilters]);
 
   React.useLayoutEffect(() => {
@@ -63,7 +70,7 @@ const FiltersScreen = ({navigation}) => {
             title="Save"
             iconName="ios-save"
             onPress={
-                saveFilters
+              saveFilters
             }
           />
         </HeaderButtons>

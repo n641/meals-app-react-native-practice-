@@ -2,15 +2,18 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 import MealList from '../Components/MealList'
-import {MEALS, Meals} from '../data/dummy-data'
-
+import {MEALS} from '../data/dummy-data'
+import { useSelector , useDispatch } from 'react-redux'
 
 import { HeaderButtons , Item , OverflowMenu , HiddenItem} from 'react-navigation-header-buttons';
 import HeaderButton from '../Components/HeaderButton';
 import {Ionicons} from"@expo/vector-icons";
 
+import { togglrFavorite } from '../Store/actions/meals'
+
 const FavouriteScreen = ({navigation}) => {
-  const Fav = MEALS.filter(meal =>meal.id=='m1'||meal.id=='m2');
+  const Fav = useSelector(state=>state.meals.favouriteMeals);
+  
   
   React.useLayoutEffect(() => {
     navigation.setOptions({

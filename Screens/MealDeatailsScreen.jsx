@@ -1,16 +1,20 @@
-import { ScrollView,
+import {
+  ScrollView,
   View,
   Image,
   Text,
   Button,
-  StyleSheet } from 'react-native'
-import React, { useLayoutEffect } from 'react';
+  StyleSheet
+} from 'react-native'
+import React, { useLayoutEffect, useCallback, useState, useEffect } from 'react';
 
-import { HeaderButtons , Item , OverflowMenu , HiddenItem} from 'react-navigation-header-buttons';
+import { HeaderButtons, Item, OverflowMenu, HiddenItem } from 'react-navigation-header-buttons';
 import HeaderButton from '../Components/HeaderButton';
-import {Ionicons} from"@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
-import { MEALS } from '../data/dummy-data'
+import { MEALS } from '../data/dummy-data';
+import { useSelector, useDispatch } from 'react-redux';
+import { togglrFavorite } from '../Store/actions/meals';
 
 const ListItem = props => {
   return (
@@ -20,24 +24,32 @@ const ListItem = props => {
   );
 };
 
-const MealDeatailsScreen = (props ) => {
-  const {mealId, title} = props.route.params;
+const MealDeatailsScreen = (props) => {
+  const { mealId, title , isFavorite } = props.route.params;
 
-  const selectedMeal = MEALS.find(meal =>meal.id==mealId)
+  const avalibleMeals = useSelector(state => state.meals.meals)
+const [isfavo, setisfavo] = useState(isFavorite)
 
- 
+  const selectedMeal = avalibleMeals.find(meal => meal.id == mealId);
+  const dispatch = useDispatch();
+
+  const toggleFavHandler = useCallback(() => {
+    dispatch(togglrFavorite(mealId))
+  }, [dispatch, mealId])
+
+
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item 
-        title='Favourite'
-        iconName="ios-star-outline"
-        onPress={()=>{
-          alert("starrrrrrrrrrrrrrrr")
-        }}
-        />
-       </HeaderButtons> 
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title='Favourite'
+            iconName={isfavo ? "ios-star" : "ios-star-outline"}
+            onPress={
+              toggleFavHandler
+            }
+          />
+        </HeaderButtons>
       )
     })
   }, [props.navigation]);
@@ -75,7 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   title: {
-   
+
     fontSize: 22,
     textAlign: 'center'
   },
